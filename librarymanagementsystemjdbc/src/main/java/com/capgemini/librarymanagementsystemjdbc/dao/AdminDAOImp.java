@@ -1,0 +1,123 @@
+package com.capgemini.librarymanagementsystemjdbc.dao;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+import com.capgemini.librarymanagementsystemjdbc.exception.LibraryManagementException;
+
+public class AdminDAOImp implements AdminDAO{
+
+	@Override
+	public int addBook(BookBean info) {
+		int count=0;
+		try {
+			try(FileInputStream fin = new FileInputStream("db.properties")){
+
+				Properties pro = new Properties(); 
+				pro.load(fin);
+
+				Class.forName(pro.getProperty("path")).newInstance();
+				try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"),pro.getProperty("user"),pro.getProperty("password"));){ 
+					String query = pro.getProperty("add_book"); 
+					try(	PreparedStatement pstmt=conn.prepareStatement(query);){
+						pstmt.setInt(1, info.getBookId());
+						pstmt.setString(2, info.getBookName());
+						pstmt.setString(3, info.getBookAuthor());
+						pstmt.setString(4, info.getBookCategory());
+						pstmt.setString(5, info.getBookPublisher());
+						count = pstmt.executeUpdate();
+
+					}
+				}
+			}
+		}
+		catch (LibraryManagementException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+
+	}
+
+
+	@Override
+	public int remove(int bookId) {
+		int count = 0;
+		try {
+			try(FileInputStream fin = new FileInputStream("db.properties")){
+
+				Properties pro = new Properties(); 
+				pro.load(fin);
+
+				Class.forName(pro.getProperty("path")).newInstance();
+				try(Connection conn =DriverManager.getConnection(pro.getProperty("dburl"),pro.getProperty("user"),pro.getProperty("password"));){ 
+					String query = pro.getProperty("remove_book"); 
+
+					try(	PreparedStatement pstmt=conn.prepareStatement(query);){
+
+						pstmt.setInt(1, bookId);
+						count = pstmt.executeUpdate();
+
+					}
+				}
+			}
+		}
+		catch (LibraryManagementException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+
+	@Override
+	public boolean issueBook(int bookId, String email) {
+		System.out.println(bookId);
+		//System.out.println("issue book called");
+		BookBean bean = new BookBean();
+		try(FileInputStream	fin = new FileInputStream("db.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			Class.forName(pro.getProperty("path")).newInstance();
+			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro.getProperty("user"),pro.getProperty("password"))){
+				String query = pro.getProperty("issue_book");
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setString(4, email);
+					pstmt.setInt(1, bookId);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					pstmt.setDate(2, java.sql.Date.valueOf(sdf.format(cal.getTime())));
+					cal.add(Calendar.DAY_OF_MONTH, 7);
+					String newDate = sdf.format(cal.getTime());
+					pstmt.setDate(3, java.sql.Date.valueOf(newDate));
+
+					int count = pstmt.executeUpdate();
+					if(count!=0) {
+						return true;
+					}else {
+						return false;
+					}
+				}
+			}
+
+		}catch (LibraryManagementException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+}

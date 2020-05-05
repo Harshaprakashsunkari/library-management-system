@@ -1,0 +1,445 @@
+package com.capgemini.librarymanagement.controller;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import com.capgemini.librarymanagement.dto.Admin;
+import com.capgemini.librarymanagement.dto.Book;
+import com.capgemini.librarymanagement.dto.Student;
+import com.capgemini.librarymanagement.exception.ValidationException;
+import com.capgemini.librarymanagement.factory.LibraryManagementFactory;
+import com.capgemini.librarymanagement.service.LibraryService;
+import com.capgemini.librarymanagement.validation.Validation;
+
+public class LibraryManagementController {
+	public static void main(String[] args) {
+		doReg();
+	}
+
+	public static void doReg() {
+
+		boolean flag = false;
+
+		int regId = 0; 
+		String regName = null; 
+		String regEmail = null;
+		String regPassword = null;
+
+		int regId1 = 0; 
+		String regName1 = null; 
+		String regEmail1 = null;
+		String regPassword1 = null;
+		long regMobile1 = 0;
+
+		int bookId = 0; 
+		String bookAuthor = null; 
+		String bookName = null;
+		String bookPublisherName = null;
+
+		Validation validation = new Validation();
+
+
+		Scanner scan = new Scanner(System.in);
+
+		// LibraryService service = LibraryManagementFactory.getLibraryService();
+		do {
+			System.out.println("Press 1 to Admin");
+			System.out.println("Press 2 to Student");
+			int i = scan.nextInt();
+			switch (i) {
+			case 1:
+				do {
+					LibraryService service = LibraryManagementFactory.getLibraryService();
+					System.out.println("Press 1 to Admin Register");
+					System.out.println("Enter 2 to Admin Login");
+					System.out.println("Press 3 to Exit");
+
+					int a = scan.nextInt();
+					switch (a) {
+					case 1:
+						do {
+							try {
+
+								System.out.println("Enter your Name");
+								regName = scan.next();
+								validation.validatedName(regName);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Name should contain only alphabets");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+								System.out.println("Enter your Email");
+								regEmail = scan.next();
+
+								validation.validatedEmail(regEmail);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Email should be in proper format");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+
+								System.out.println("Enter your Password");
+								regPassword = scan.next();
+
+								validation.validatedPassword(regPassword);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Enter correct password");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						Admin admin = new Admin();
+						admin.setName(regName);
+						admin.setAdEmail(regEmail);
+						admin.setAdPassword(regPassword);
+
+						boolean adReg = service.register(admin);
+						if (adReg) {
+							System.out.println("Registered Successfully");
+						} else {
+							System.out.println("Registration Failed");
+						}
+						break;
+
+					case 2:
+						System.out.println("Enter your Email");
+						String mail = scan.next();
+						System.out.println("Enter your Password");
+						String pwd = scan.next();
+
+						Admin ad = service.adminLogin(mail, pwd);
+						if (ad != null) {
+							System.out.println("Logged in successfully");
+						}
+						do {
+							System.out.println("Press 1 to Add a Book");
+							System.out.println("Press 2 to Remove a Book");
+							System.out.println("Press 3 to Issue Book");
+							System.out.println("Press 4 to Exit");
+
+							int b = scan.nextInt();
+							switch (b) {
+							case 1:
+								do {
+									try {
+
+										System.out.println("Enter Book Id");
+										bookId = scan.nextInt();
+										validation.validatedId(bookId);
+										flag = true;
+									} catch (InputMismatchException e) {
+										flag = false;
+										System.err.println("Id should contains only 2 digits");
+									} catch (ValidationException e) {
+										flag = false;
+										System.err.println(e.getMessage());
+									}
+								} while (!flag);
+
+
+								do {
+									try {
+										System.out.println("Enter Name of the Book");
+										bookName = scan.next();
+										validation.validatedName(bookName);
+										flag = true;
+									} catch (InputMismatchException e) {
+										flag = false;
+										System.err.println("Book Name should contains only Alphabates");
+									} catch (ValidationException e) {
+										flag = false;
+										System.err.println(e.getMessage());
+									}
+								} while (!flag);
+
+
+								do {
+									try {
+										System.out.println("Enter Author :");
+										bookAuthor = scan.next();
+										validation.validatedName(bookAuthor);
+										flag = true;
+									} catch (InputMismatchException e) {
+										flag = false;
+										System.err.println("Author Name should contains only Alphabates");
+									} catch (ValidationException e) {
+										flag = false;
+										System.err.println(e.getMessage());
+									}
+								} while (!flag);
+
+
+								do {
+									try {
+										System.out.println("Enter PublisherName :");
+										bookPublisherName = scan.next();
+										validation.validatedName(bookPublisherName);
+										flag = true;
+									} catch (InputMismatchException e) {
+										flag = false;
+										System.err.println("Book-PublisherName should contains only Alphabates");
+									} catch (ValidationException e) {
+										flag = false;
+										System.err.println(e.getMessage());
+									}
+								} while (!flag);
+
+								Book book = new Book();
+								book.setBookId(bookId);
+								book.setBookName(bookName);
+								book.setBookAuthor(bookAuthor);
+								book.setBookPublisher(bookPublisherName);
+
+								boolean add = service.addBook(book);
+								if (add) {
+									System.out.println("Book is added successfully");
+								} else {
+									System.out.println("Book is not added");
+								}
+								break;
+
+							case 2:
+								System.out.println("Enter Book Id");
+								int bookId1 = scan.nextInt();
+								// try {
+								boolean remove = service.removeBook(bookId);
+								if (remove) {
+									System.out.println("Book is removed successfully");
+								} else {
+									System.out.println("Book is not removed");
+								}
+								break;
+
+							case 3:
+								System.out.println("Enter Book Id");
+								int issued = scan.nextInt();
+								// try {
+								boolean issuedBook = service.issueBook(issued);
+								if (issuedBook) {
+									System.out.println("Book Issued");
+								} else {
+									System.out.println("Book is not issued");
+								}
+								break;
+
+							case 4:
+								doReg();
+							default:
+								System.out.println("Invalid entry");
+								break;
+							}
+						} while (true);
+					case 3:
+						doReg();
+						break;
+					default:
+						System.out.println("Invalid Entry");
+					}
+				} while (true);
+
+			case 2:
+
+				do {
+					LibraryService service1 = LibraryManagementFactory.getLibraryService();
+					System.out.println("Press 1 to Student Register");
+					System.out.println("Press 2 to Student Login");
+					System.out.println("Press 3 to Exit");
+					int c = scan.nextInt();
+					boolean isStudent = false;
+					switch (c) {
+
+					case 1:
+						do {
+							try {
+								System.out.println("Enter your Id");
+								regId1 = scan.nextInt();
+								validation.validatedId(regId1);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Id should contain only 2 digits");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+								System.out.println("Enter your Name");
+								regName1 = scan.next();
+								validation.validatedName(regName1);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Name should contains only Alphabates");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+								System.out.println("Enter your Email");
+								regEmail1 = scan.next();
+								validation.validatedEmail(regEmail1);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Email should be proper");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+								System.out.println("Enter your Password");
+								regPassword1 = scan.next();
+								validation.validatedPassword(regPassword1);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Enter correct Password");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						do {
+							try {
+								System.out.println("Enter your Mobile Number");
+								regMobile1 = scan.nextLong();
+								validation.validatedMobile(regMobile1);
+								flag = true;
+							}catch(InputMismatchException e) {
+								flag = false;
+								System.err.println("Mobile number should contain only digits");
+							}catch(ValidationException e) {
+								flag = false;
+								System.err.println(e.getMessage());
+							}
+						}while(!flag);
+
+						System.out.println("Enter your branch");
+						String regBranch = scan.next();
+
+						Student student = new Student();
+						student.setStudentId(regId1);
+						student.setName(regName1);
+						student.setEmail(regEmail1);
+						student.setStPassword(regPassword1);
+						student.setMobile(regMobile1);
+						student.setBranch(regBranch);
+
+						boolean reg = service1.register(student);
+						if (reg) {
+							System.out.println("Registered successfully");
+						} else {
+							System.out.println("Registration failed");
+						}
+						break;
+
+					case 2:
+						System.out.println("Enter your Email");
+						String stuEmail = scan.next();
+						System.out.println("Enter your Password");
+						String stuPassword = scan.next();
+						// try {
+						Student stu = service1.studentLogin(stuEmail, stuPassword);
+						if (stu != null) {
+							System.out.println("Logged in successfully");
+						} 
+
+						do {
+
+							System.out.println("Press 1 to Request for a Book");
+							System.out.println("Press 2 to Search for a Book");
+							//System.out.println("Press 3 to Borrow a Book");
+							System.out.println("Press 4 to Return for a Book");
+							System.out.println("Press 5 to Exit");
+							int d = scan.nextInt();
+							switch (d) {
+
+							case 1:
+								System.out.println("Enter Book Id");
+								int reqBook = scan.nextInt();
+								System.out.println("Enter Author Name");
+								String reqBookAuthor = scan.next();
+								// try {
+								boolean book = service1.placeReq(reqBook, reqBookAuthor);
+								if (book) {
+									System.out.println("Requested successfully");
+								} else {
+									System.out.println("Book not found");
+								}
+								break;
+
+							case 2:
+								// if(isStudent) {
+								System.out.println("Enter Book Id");
+								int searchBookId = scan.nextInt();
+								// try {
+								Book searchBook = service1.searchBook(searchBookId);
+								if (searchBook != null) {
+									System.out.println("Book Id : " + searchBook.getBookId());
+									System.out.println("Book Name : " + searchBook.getBookName());
+									System.out.println("Book Author : " + searchBook.getBookAuthor());
+									System.out.println("Book Publisher : " + searchBook.getBookPublisher());
+								} else {
+									System.out.println("Book Not Found");
+								}
+								break;
+						
+							case 3:
+								System.out.println("Enter Book Id");
+								int returned = scan.nextInt();
+								// try {
+								boolean returnBook = service1.returnBook(returned);
+								if (returnBook) {
+									System.out.println("Book Returned");
+								} else {
+									System.out.println("Book is not returned");
+								}
+								break;
+
+							case 5:
+								doReg();
+								break;
+
+							case 6:
+								doReg();
+								break;
+							default:
+								System.out.println("Invalid Entry");
+								break;
+							}
+						} while (true);
+					}
+				} while (true);
+			}
+		} while (true);
+	}
+
+}

@@ -1,0 +1,30 @@
+package com.capgemini.librarymanagementsystemjdbc.service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dao.AdminDAO;
+import com.capgemini.librarymanagementsystemjdbc.dao.StudentDAO;
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+import com.capgemini.librarymanagementsystemjdbc.factory.AdminFactory;
+import com.capgemini.librarymanagementsystemjdbc.factory.StudentFactory;
+
+public class StudentServiceImp implements StudentService{
+
+	private StudentDAO dao = StudentFactory.getStudentDAO();
+	@Override
+	public boolean req(int id,String email ) {
+		return dao.req(id,email);
+	}
+
+	@Override
+	public BookBean searchBookType(int bookType) {
+		return dao.searchBookType(bookType);
+	}
+
+	@Override
+	public boolean returnBook(int id) {
+		return dao.returnBook(id);
+	}
+
+}

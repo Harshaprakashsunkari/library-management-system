@@ -1,0 +1,14 @@
+package com.capgemini.librarymanagementsystemjdbc.service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+
+public interface StudentService {
+	
+	boolean req(int id, String email);
+	BookBean searchBookType(int bookType);
+	boolean returnBook(int id);
+	
+}

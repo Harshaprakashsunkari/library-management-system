@@ -1,0 +1,31 @@
+package com.capgemini.librarymanagementsystemjdbc.service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dao.AdminDAO;
+import com.capgemini.librarymanagementsystemjdbc.factory.AdminFactory;
+import com.capgemini.librarymanagementsystemjdbc.dto.AdminBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+
+public class AdminServiceImp implements AdminService{
+	private AdminDAO dao = AdminFactory.getAdminDAO();
+	
+
+	
+	@Override
+	public int remove(int bId) {
+		return dao.remove(bId);
+	}
+
+	@Override
+	public int addBook(BookBean info) {
+		return dao.addBook(info);
+	}
+
+	@Override
+	public boolean issueBook(int bId,String email) {
+		return dao.issueBook(bId, email);
+	}
+
+}

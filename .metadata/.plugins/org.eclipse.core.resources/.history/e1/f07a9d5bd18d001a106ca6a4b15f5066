@@ -1,0 +1,13 @@
+package com.capgemini.librarymanagementsystemhibernate.service;
+
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemhibernate.dto.BookBean;
+
+public interface StudentService {
+
+	boolean req(int bookId, String email);
+	BookBean searchBookType(int bookType);
+	boolean reqReturnBook(int id , int book_id);
+	
+}

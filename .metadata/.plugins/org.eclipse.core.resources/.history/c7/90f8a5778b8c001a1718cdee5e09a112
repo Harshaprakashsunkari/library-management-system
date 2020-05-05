@@ -1,0 +1,14 @@
+package com.capgemini.librarymanagementsystemjdbc.service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.AdminBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+
+public interface AdminService {
+	
+	int addBook(BookBean info);
+	int delete(int bId);
+	boolean issueBook(int bId, String email);
+}

@@ -1,0 +1,13 @@
+package com.capgemini.librarymanagementsystemjdbc.dao;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+
+public interface StudentDAO {
+	
+	boolean req(int id, String email);
+	BookBean searchBookType(int bookType);
+	boolean returnBook(int id);
+}

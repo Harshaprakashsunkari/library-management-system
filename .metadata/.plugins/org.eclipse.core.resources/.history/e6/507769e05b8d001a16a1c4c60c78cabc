@@ -1,0 +1,19 @@
+user = root
+password = root
+dburl = jdbc:mysql://localhost:3306/librarymanagementjdbc
+path = com.mysql.jdbc.Driver
+
+register_admin=insert into user values(?,?,?,?,?,?);
+auth_admin=select email,password from user where email=? and password=?;
+register_student=insert into student values(?,?,?,?,?);
+auth_student=select email,password from student where email=? and password=?;
+
+add_book = insert into book_details(bid,book_title,category,author,publisher_name) values(?,?,?,?,?);
+remove_book = delete from book_details where bid=?;
+issue_book = insert into book_issue values(?,?,?,?);
+
+req_book = select * from book_details where bid = ?;
+search_book_id = select * from book_details where bid=?;
+return_book = delete from book_issue where bid = ?;
+
+role_que = select role from user where email=?;

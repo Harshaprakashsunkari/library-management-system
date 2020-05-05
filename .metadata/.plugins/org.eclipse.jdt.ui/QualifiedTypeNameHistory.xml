@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemhibernate.exception.LibraryManagementException"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemjdbc.validation.LibraryManagementValidation"/>
+<fullyQualifiedTypeName name="java.util.InputMismatchException"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemjdbc.exception.LibraryManagementException"/>
+</qualifiedTypeNameHistroy>

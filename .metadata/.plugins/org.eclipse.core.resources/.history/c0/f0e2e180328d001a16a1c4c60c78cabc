@@ -1,0 +1,18 @@
+package com.capgemini.librarymanagementsystemjdbc.dao;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.StudentBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.AdminBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+
+
+public interface AdminDAO {
+		
+	int addBook(BookBean info);
+	int remove(int bookId);
+	boolean issueBook(int bookId, String email);
+	
+	
+}
