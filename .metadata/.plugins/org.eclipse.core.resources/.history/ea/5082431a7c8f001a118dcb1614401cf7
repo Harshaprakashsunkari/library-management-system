@@ -1,0 +1,29 @@
+package com.capgemini.librarymanagementsystemhibernate.dto;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class RequestBookPK implements Serializable{
+private int bookId;
+private String email;
+public int getBookId() {
+	return bookId;
+}
+public void setBookId(int bookId) {
+	this.bookId = bookId;
+}
+public String getEmail() {
+	return email;
+}
+public void setEmail(String email) {
+	this.email = email;
+}
+@Override
+public String toString() {
+	return "RequestBookPK [bookId=" + bookId + ", email=" + email + "]";
+}
+
+
+}

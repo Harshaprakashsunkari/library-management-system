@@ -2,8 +2,15 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
-<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemhibernate.exception.LibraryManagementException"/>
 <fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemjdbc.validation.LibraryManagementValidation"/>
-<fullyQualifiedTypeName name="java.util.InputMismatchException"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemjdbc.dto.BookBean"/>
+<fullyQualifiedTypeName name="lombok.Data"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagement.exception.LibraryManagementException"/>
 <fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemjdbc.exception.LibraryManagementException"/>
+<fullyQualifiedTypeName name="java.util.InputMismatchException"/>
+<fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemhibernate.validation.LibraryManagementValidation"/>
+<fullyQualifiedTypeName name="com.capgemini.librarymanagementsystemhibernate.exception.LibraryManagementException"/>
 </qualifiedTypeNameHistroy>

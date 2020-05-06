@@ -1,0 +1,17 @@
+package com.capgemini.librarymanagementsystemhibernate.dto;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+import lombok.Data;
+
+@SuppressWarnings("serial")
+@Data
+@Embeddable
+public class BookIssuePKDetails implements Serializable{
+	
+	private int bookId;
+	private String email;
+
+}
